@@ -10,7 +10,7 @@ import org.example.project.data.ProgrammingLanguage
 import org.example.project.data.ProgrammingLanguageRepository
 
 class ProgrammingLanguageViewModel(
-  private val repository: ProgrammingLanguageRepository = ProgrammingLanguageRepository(),
+  private val repository: ProgrammingLanguageRepository
 ) : ViewModel() {
   private val _programmingLanguages = MutableStateFlow<List<ProgrammingLanguage>>(emptyList())
   val programmingLanguages: StateFlow<List<ProgrammingLanguage>> = _programmingLanguages.asStateFlow()

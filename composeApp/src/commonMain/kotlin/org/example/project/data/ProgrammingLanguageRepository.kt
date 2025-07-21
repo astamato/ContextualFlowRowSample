@@ -1,7 +1,11 @@
 package org.example.project.data
 
-class ProgrammingLanguageRepository {
-  fun getProgrammingLanguages(): List<ProgrammingLanguage> {
+interface ProgrammingLanguageRepository {
+  fun getProgrammingLanguages(): List<ProgrammingLanguage>
+}
+
+class ProgrammingLanguageRepositoryImpl : ProgrammingLanguageRepository {
+  override fun getProgrammingLanguages(): List<ProgrammingLanguage> {
     return listOf(
       ProgrammingLanguage("kotlin", "Kotlin"),
       ProgrammingLanguage("java", "Java"),

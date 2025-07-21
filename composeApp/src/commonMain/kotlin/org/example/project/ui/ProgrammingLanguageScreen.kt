@@ -17,13 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.example.project.data.ProgrammingLanguage
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ProgrammingLanguageScreen(
   modifier: Modifier = Modifier,
-  viewModel: ProgrammingLanguageViewModel = viewModel(),
+  viewModel: ProgrammingLanguageViewModel = koinViewModel(),
 ) {
   val programmingLanguages by viewModel.programmingLanguages.collectAsStateWithLifecycle()
   val selectedLanguages by viewModel.selectedLanguages.collectAsStateWithLifecycle()

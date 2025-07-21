@@ -9,20 +9,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.example.project.di.appModule
 import org.example.project.ui.ProgrammingLanguageScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.KoinApplication
 
 @Composable
 @Preview
 fun App() {
-  MaterialTheme {
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-      Column {
-        val platform = getPlatform()
-        Text("Hello,  ${platform.name}!", modifier = Modifier.padding(16.dp))
-        ProgrammingLanguageScreen(
-          modifier = Modifier.padding(innerPadding),
-        )
+  KoinApplication(application = {
+    modules(appModule)
+  }) {
+    MaterialTheme {
+      Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Column {
+          val platform = getPlatform()
+          Text("Hello,  ${platform.name}!", modifier = Modifier.padding(innerPadding).padding(16.dp))
+          ProgrammingLanguageScreen(
+            modifier = Modifier.padding(innerPadding),
+          )
+        }
       }
     }
   }
