@@ -17,7 +17,7 @@ A **Jetpack Compose** implementation of a contextual flow layout with overflow h
 
 | Main View | Bottom Sheet |
 |-----------|--------------|
-| ![Main View](https://via.placeholder.com/300x150/5A6B8C/FFFFFF?text=Kotlin+Java+C%2B%2B+Python+GO+Javascript+14%2B+more) | ![Bottom Sheet](https://via.placeholder.com/300x200/F5F5F5/333333?text=14+More+Items%0A%0ASwift+Rust+TypeScript+PHP+Ruby+Scala+R+Perl+Lua+Haskell+Clojure+Elixir+C%23) |
+| ![Main View](assets/shot1.png) | ![Bottom Sheet](assets/shot2.png) |
 
 *Sample showing programming languages with overflow handling*
 
@@ -96,13 +96,13 @@ Text("$remainingCount+ more")
 ### **Component Separation**
 
 ```
-┌─────────────────────┐    ┌─────────────────────┐    ┌─────────────────────┐
-│   ContextualFlowRow │───▶│ RemainingItemsModal │───▶│ RemainingItemsSheet │
-│                     │    │   BottomSheet       │    │                     │
-│ • Layout Logic      │    │ • Modal Management  │    │ • Content Display   │
-│ • Overflow Detection│    │ • State Handling    │    │ • Item Rendering    │
-│ • Chip Measurement  │    │ • Sheet Lifecycle   │    │ • Flow Layout       │
-└─────────────────────┘    └─────────────────────┘    └─────────────────────┘
+┌─────────────────────┐    ┌─────────────────────┐    ┌─────────────────────────────────┐
+│   ContextualFlowRow │───▶│ RemainingItemsModal │───▶│ RemainingItemsModalBottomSheet- │
+│                     │    │   BottomSheet       │    │            Content              │
+│ • Layout Logic      │    │ • Modal Management  │    │ • Content Display               │
+│ • Overflow Detection│    │ • State Handling    │    │ • Item Rendering                │
+│ • Chip Measurement  │    │ • Sheet Lifecycle   │    │ • Flow Layout                   │
+└─────────────────────┘    └─────────────────────┘    └─────────────────────────────────┘
 ```
 
 ### **Key Design Decisions**
@@ -226,9 +226,9 @@ This is a sample implementation. Feel free to:
 
 ## 📄 **License**
 
-```
-MIT License - Feel free to use this implementation in your projects
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Feel free to use this implementation in your projects!
 
 ---
 

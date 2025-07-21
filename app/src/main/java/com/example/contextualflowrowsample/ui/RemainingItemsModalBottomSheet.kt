@@ -15,9 +15,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun <T> RemainingItemsModalBottomSheet(
+  items: List<T>,
+  isVisible: Boolean,
+  onDismiss: () -> Unit,
+  itemContent: @Composable (T) -> Unit,
+) {
+  if (isVisible) {
+    ModalBottomSheet(
+      onDismissRequest = onDismiss,
+      sheetState = rememberModalBottomSheetState(),
+    ) {
+      RemainingItemsModalBottomSheetContent(
+        items = items,
+        onDismiss = onDismiss,
+        itemContent = itemContent,
+      )
+    }
+  }
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun <T> RemainingItemsBottomSheet(
+private fun <T> RemainingItemsModalBottomSheetContent(
   items: List<T>,
   onDismiss: () -> Unit,
   itemContent: @Composable (T) -> Unit,
@@ -48,27 +70,5 @@ fun <T> RemainingItemsBottomSheet(
     Spacer(
       modifier = Modifier.padding(bottom = 32.dp),
     )
-  }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun <T> RemainingItemsModalBottomSheet(
-  items: List<T>,
-  isVisible: Boolean,
-  onDismiss: () -> Unit,
-  itemContent: @Composable (T) -> Unit,
-) {
-  if (isVisible) {
-    ModalBottomSheet(
-      onDismissRequest = onDismiss,
-      sheetState = rememberModalBottomSheetState(),
-    ) {
-      RemainingItemsBottomSheet(
-        items = items,
-        onDismiss = onDismiss,
-        itemContent = itemContent,
-      )
-    }
   }
 }
