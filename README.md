@@ -1,6 +1,11 @@
 # ContextualFlowRow Sample
 
-A **Jetpack Compose** implementation of a contextual flow layout with overflow handling, built as a replacement for deprecated flow components. This sample demonstrates how to create a smart, responsive layout that automatically shows a "**X+ more**" chip when content overflows.
+A **Jetpack Compose** implementation of a contextual flow layout with overflow handling, built as a replacement for the deprecated `ContextualFlowRow` component. This sample demonstrates how to create a smart, responsive layout that automatically shows a "**X+ more**" chip when content overflows.
+
+## 📖 **Caveat**
+This solution uses `Layout` and composes all list items, irrespective of whether they'll be displayed or not.
+Because this implementation does not rely on `SubComposeLayout`, it becomes more performant for shorter lists, which is typically the use case for chip arrangements like the one portrayed in the example.
+As the list grow the more we could've benefited from using an implementation that leverages `SubComposeLayout` to avoid composing all items straight away.
 
 > 🚨 **Why this exists**: With the deprecation of official flow components, this sample provides a production-ready alternative with enhanced overflow management.
 
