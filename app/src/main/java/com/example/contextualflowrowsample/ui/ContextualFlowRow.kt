@@ -1,25 +1,13 @@
 package com.example.contextualflowrowsample.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
@@ -29,7 +17,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun <T> ContextualFlowRow(
   items: List<T>,
@@ -37,14 +25,11 @@ fun <T> ContextualFlowRow(
   maxLines: Int = Int.MAX_VALUE,
   horizontalSpacing: Dp = 8.dp,
   verticalSpacing: Dp = 8.dp,
-  onMoreClick: (Int) -> Unit = {},
+  onMoreClick: (List<T>) -> Unit = {},
   itemContent: @Composable (T) -> Unit,
 ) {
   val context = LocalDensity.current
-  var showBottomSheet by remember { mutableStateOf(false) }
-  var remainingItems by remember { mutableStateOf<List<T>>(emptyList()) }
   val visibleItemsCountRef = remember { mutableIntStateOf(items.size) }
-  val bottomSheetState = rememberModalBottomSheetState()
 
   Layout(
     modifier = modifier,
@@ -76,9 +61,7 @@ fun <T> ContextualFlowRow(
             } else {
               emptyList()
             }
-          remainingItems = actualRemainingItems
-          showBottomSheet = true
-          onMoreClick(actualRemainingItems.size)
+          onMoreClick(actualRemainingItems)
         },
         label = {
           val remainingCount = maxOf(0, items.size - visibleItemsCountRef.intValue)
@@ -139,56 +122,6 @@ fun <T> ContextualFlowRow(
         placeable.placeRelative(position.first, position.second)
       }
     }
-  }
-
-  // Bottom sheet for remaining items
-  if (showBottomSheet) {
-    ModalBottomSheet(
-      onDismissRequest = { showBottomSheet = false },
-      sheetState = bottomSheetState,
-    ) {
-      RemainingItemsBottomSheet(
-        items = remainingItems,
-        onDismiss = { showBottomSheet = false },
-        itemContent = itemContent,
-      )
-    }
-  }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun <T> RemainingItemsBottomSheet(
-  items: List<T>,
-  onDismiss: () -> Unit,
-  itemContent: @Composable (T) -> Unit,
-) {
-  Column(
-    modifier =
-      Modifier
-        .fillMaxWidth()
-        .padding(16.dp),
-  ) {
-    Text(
-      text = "${items.size} More Items",
-      style = androidx.compose.material3.MaterialTheme.typography.headlineSmall,
-      modifier = Modifier.padding(bottom = 16.dp),
-    )
-
-    FlowRow(
-      modifier = Modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.spacedBy(8.dp),
-      verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-      items.forEach { item ->
-        itemContent(item)
-      }
-    }
-
-    // Add some bottom padding for the bottom sheet
-    Spacer(
-      modifier = Modifier.padding(bottom = 32.dp),
-    )
   }
 }
 
